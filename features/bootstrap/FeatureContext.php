@@ -5,11 +5,14 @@ use Behat\Behat\Context\Context;
 use Behat\Gherkin\Node\PyStringNode;
 use Behat\Gherkin\Node\TableNode;
 
+use conquerorsoft\bdd\StringTransformation;
+
 /**
  * Defines application features from the specific context.
  */
 class FeatureContext implements Context
 {
+    protected $stringTransformation;
     /**
      * Initializes context.
      *
@@ -19,6 +22,7 @@ class FeatureContext implements Context
      */
     public function __construct()
     {
+        $this->stringTransformation = new StringTransformation();
     }
 
     /**
@@ -26,7 +30,7 @@ class FeatureContext implements Context
      */
     public function thatAPlainStringIsProvided($arg1)
     {
-        throw new PendingException();
+        $this->stringTransformation->setPlainString($arg1);
     }
 
     /**
@@ -34,7 +38,7 @@ class FeatureContext implements Context
      */
     public function theUserRequiresToEncodeIt()
     {
-        throw new PendingException();
+        $this->stringTransformation->encode();
     }
 
     /**
@@ -42,7 +46,8 @@ class FeatureContext implements Context
      */
     public function theEncodedStringWillBe($arg1)
     {
-        throw new PendingException();
+        $encodedString = $this->stringTransformation->getEncodedString();
+        PHPUnit\Framework\Assert::assertEquals($arg1, $encodedString);
     }
 
     /**
@@ -50,7 +55,7 @@ class FeatureContext implements Context
      */
     public function thatAnEncodedStringIsProvided($arg1)
     {
-        throw new PendingException();
+        $this->stringTransformation->setEncodedString($arg1);
     }
 
     /**
@@ -58,7 +63,7 @@ class FeatureContext implements Context
      */
     public function theUserRequiresToDecodeIt()
     {
-        throw new PendingException();
+        $this->stringTransformation->decode();
     }
 
     /**
@@ -66,6 +71,7 @@ class FeatureContext implements Context
      */
     public function thePlainStringWillBe($arg1)
     {
-        throw new PendingException();
+        $plainString = $this->stringTransformation->getPlainString();
+        PHPUnit\Framework\Assert::assertEquals($arg1, $plainString);
     }
 }
